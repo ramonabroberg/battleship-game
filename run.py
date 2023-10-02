@@ -3,6 +3,7 @@ from random import randint
 def new_game():
     """
     Starts a new game. Sets the size and number of ships for the game.
+    Informs about how the game works and asks the player for its name.
     """
     size = 6
     number_ships = 5

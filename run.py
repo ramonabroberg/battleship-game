@@ -23,22 +23,13 @@ def new_game():
     print("^" * 40)
 
 
-def random_player_values(size):
+def random_values(size):
     """
-    Creates random positions for the player's board.
+    Creates random guess from computer.
     """
-    global player_row
-    global player_column
-    player_row, player_column = randint(0, size - 1), randint(0, size - 1)
-
-
-def random_computer_values(size):
-    """
-    Creates random positions for the computer's board.
-    """
-    global computer_row
-    global computer_column
-    computer_row, computer_column = randint(0, size - 1), randint(0, size - 1)
+    global random_row
+    global random_column
+    random_row, random_column = randint(0, size - 1), randint(0, size - 1)
 
 
 def build_board(size):
@@ -48,24 +39,24 @@ def build_board(size):
     return [["O" for count in range(size)] for count in range(size)]
 
 
-def print_player_board(board, ship_row, ship_column):
+def print_player_board(board):
     """
     Prints out the player's name and board.
     """
     print(f"{player_name}'s board:")
     for i in board:
         print(*i)
-    print(f"{player_name}'s guess: {player_row}, {player_column}")
+    # print(f"{player_name}'s guess: {player_row}, {player_column}")
 
 
-def print_computer_board(board, ship_row, ship_column):
+def print_computer_board(board, random_row, random_column):
     """
     Prints out the computer's board.
     """
     print("\nComputer's board:")
     for i in board:
         print(*i)
-    print(f"Computer's guess: {computer_row}, {computer_column}")
+    print(f"Computer's guess: {random_row}, {random_column}")
 
 
 def main():
@@ -75,13 +66,10 @@ def main():
     """
     new_game()
     board = build_board(size)
-    random_player_values(size)
-    random_computer_values(size)
-    print_player_board(board, player_row, player_column)
-    print_computer_board(board, computer_row, computer_column)
+    random_values(size)
+    print_player_board(board)
+    print_computer_board(board, random_row, random_column)
 
 
 main()
-    """
-    Function with all the game functions in it.
-    """
+

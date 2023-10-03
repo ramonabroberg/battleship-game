@@ -16,7 +16,7 @@ def new_game():
     print("Welcome to the Battleship Game!")
     print(f"You have {number_ships} ships to find on the board.")
     print(f"Boardsize: {size}x{size}.")
-    print(f"Available options are row: 1-{size} and column: 1-{size}.")
+    print(f"Available options are row: 0-{size - 1} and column: 0-{size - 1}.")
     print("^" * 40)
     player_name = input("What is your name? ")
     print("Nice to meet you " + player_name + ", let's play a game!")
@@ -27,9 +27,9 @@ def random_values(size):
     """
     Creates random guess from computer.
     """
-    global random_row
-    global random_column
-    random_row, random_column = randint(0, size - 1), randint(0, size - 1)
+    global ship_row
+    global ship_column
+    ship_row, ship_column = randint(0, size - 1), randint(0, size - 1)
 
 
 def build_board(size):
@@ -49,14 +49,20 @@ def print_player_board(board):
     # print(f"{player_name}'s guess: {player_row}, {player_column}")
 
 
-def print_computer_board(board, random_row, random_column):
+def print_computer_board(board):
     """
     Prints out the computer's board.
     """
     print("\nComputer's board:")
     for i in board:
         print(*i)
-    print(f"Computer's guess: {random_row}, {random_column}")
+    # print(f"Computer's guess: Row {ship_row}, Column {ship_column}")
+
+
+def player_guess():
+    row = int(input("Choose a row: "))
+    column = int(input("Choose a column: "))
+    print(f"You guessed: row {row}, column {column}")
 
 
 def main():
@@ -68,7 +74,8 @@ def main():
     board = build_board(size)
     random_values(size)
     print_player_board(board)
-    print_computer_board(board, random_row, random_column)
+    print_computer_board(board)
+    player_guess()
 
 
 main()

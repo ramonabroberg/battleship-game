@@ -13,29 +13,21 @@ def new_game():
     """
     global player_name
     print("^" * 40)
-    print("Welcome to the Battleship Game!")
+    print("\nWelcome to the Battleship Game!\n")
     print(f"You have {number_ships} ships to find on the board.")
     print(f"Boardsize: {size}x{size}.")
-    print(f"Available options are row: 0-{size - 1} and column: 0-{size - 1}.")
+    print(f"Available options are row: 0-{size - 1} & column: 0-{size - 1}.\n")
     print("^" * 40)
-    player_name = input("What is your name? ")
-    print("Nice to meet you " + player_name + ", let's play a game!")
+    player_name = input("\nWhat is your name? ")
+    print("Nice to meet you " + player_name + ", let's play a game!\n")
     print("^" * 40)
-
-
-def random_values(size):
-    """
-    Creates random guess from computer.
-    """
-    global ship_row
-    global ship_column
-    ship_row, ship_column = randint(0, size - 1), randint(0, size - 1)
 
 
 def build_board(size):
     """
     Structure for the game board.
     """
+    global board_structure
     return [["O" for count in range(size)] for count in range(size)]
 
 
@@ -46,7 +38,6 @@ def print_player_board(board):
     print(f"{player_name}'s board:")
     for i in board:
         print(*i)
-    # print(f"{player_name}'s guess: {player_row}, {player_column}")
 
 
 def print_computer_board(board):
@@ -56,13 +47,63 @@ def print_computer_board(board):
     print("\nComputer's board:")
     for i in board:
         print(*i)
-    # print(f"Computer's guess: Row {ship_row}, Column {ship_column}")
 
 
 def player_guess():
-    row = int(input("Choose a row: "))
-    column = int(input("Choose a column: "))
-    print(f"You guessed: row {row}, column {column}")
+    while True:
+        row = int(input("\nChoose a row: "))
+        if validate_row(row, size):
+            print("Fantastic! That value is valid!\n")
+            break
+
+    while True:
+        column = int(input("Choose a column: "))
+        if validate_column(column, size):
+            print("Perfect, that value is accepted!\n")
+            break
+
+    print(f"You guessed row: {row}, column: {column}\n")
+
+
+def random_values(size):
+    """
+    Creates random guess from computer.
+    """
+    global computer_row
+    global computer_column
+    computer_row, computer_column = randint(0, size - 1), randint(0, size - 1)
+    # print(f"Computer guessed row: {computer_row} column: {computer_column}.")
+
+
+def validate_row(row, size):
+    try:
+        if row < 0 or row > size - 1:
+            raise ValueError(
+                f"Only 0-{size - 1} is accepted here. You entered {row}"
+            )
+
+    except ValueError as e:
+        print(f"Invalid data: {e}. Please try again.\n")
+        return False
+
+    return True
+
+
+def validate_column(column, size):
+    try:
+        if column < 0 or column > size - 1:
+            raise ValueError(
+                f"Only 0-{size - 1} is accepted here. You entered {column}"
+            )
+    except ValueError as e:
+        print(f"Invalid data: {e}. Please try again.\n")
+        return False
+
+    return True
+
+
+def update_board():
+    pass
 
 
 def main():
@@ -72,10 +113,10 @@ def main():
     """
     new_game()
     board = build_board(size)
-    random_values(size)
     print_player_board(board)
     print_computer_board(board)
     player_guess()
+    random_values(size)
 
 
 main()

@@ -1,3 +1,4 @@
+# Import to get randomized numbers
 from random import randint
 
 # Sets the size for the boards and the amount of ships.
@@ -23,22 +24,34 @@ def new_game():
 
 
 def random_player_values(size):
+    """
+    Creates random positions for the player's board.
+    """
     global player_row
     global player_column
     player_row, player_column = randint(0, size - 1), randint(0, size - 1)
 
 
 def random_computer_values(size):
+    """
+    Creates random positions for the computer's board.
+    """
     global computer_row
     global computer_column
     computer_row, computer_column = randint(0, size - 1), randint(0, size - 1)
 
 
 def build_board(size):
+    """
+    Structure for the game board.
+    """
     return [["O" for count in range(size)] for count in range(size)]
 
 
 def print_player_board(board, ship_row, ship_column):
+    """
+    Prints out the player's name and board.
+    """
     print(f"{player_name}'s board:")
     for i in board:
         print(*i)
@@ -46,6 +59,9 @@ def print_player_board(board, ship_row, ship_column):
 
 
 def print_computer_board(board, ship_row, ship_column):
+    """
+    Prints out the computer's board.
+    """
     print("\nComputer's board:")
     for i in board:
         print(*i)
@@ -53,6 +69,10 @@ def print_computer_board(board, ship_row, ship_column):
 
 
 def main():
+    """
+    Includes all the game functions to make it easy to read and
+    keeps it all together.
+    """
     new_game()
     board = build_board(size)
     random_player_values(size)
@@ -62,4 +82,6 @@ def main():
 
 
 main()
-
+    """
+    Function with all the game functions in it.
+    """

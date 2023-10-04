@@ -24,22 +24,6 @@ def new_game():
     print("^" * 40)
 
 
-def build_board(size):
-    """
-    Structure for the game board.
-    """
-    return [["O" for count in range(size)] for count in range(size)]
-
-
-def print_board(board):
-    """
-    Prints out the computer's board.
-    """
-    print("\nComputer's board:")
-    for i in board:
-        print(*i)
-
-
 def player_guess():
     """
     Here the user will enter their values about row and column.
@@ -106,18 +90,18 @@ def validate_column(column, size):
     return True
 
 
-def result(guess, board, random_value):
+def result(guess, random_value):
     """
     Gives the result of the guess.
     """
     if guess == random_value:
         print("Well look at that! You sank the battleship!")
         print(f"The ship was located on {random_value}.")
-        return board
+        return
     else:
         while guess != random_value:
             print(f"You missed! {random_value} was correct.")
-            return board
+            return
 
 
 def main():
@@ -126,11 +110,9 @@ def main():
     keeps it all together.
     """
     new_game()
-    board = build_board(size)
-    print_board(board)
     guess = player_guess()
     ship(size)
-    board = result(guess, board, random_value)
+    result(guess, random_value)
     return
 
 

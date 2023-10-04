@@ -63,6 +63,8 @@ def player_guess():
             break
 
     print(f"You guessed row: {row}, column: {column}\n")
+    guess = row, column
+    return guess
 
 
 def random_values(size):

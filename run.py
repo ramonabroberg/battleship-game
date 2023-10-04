@@ -3,8 +3,8 @@ from random import randint
 import random
 
 # Sets the size for the boards and the amount of ships.
-size = 6
-number_ships = 5
+size = 4
+number_ships = 1
 
 
 def new_game():
@@ -15,7 +15,7 @@ def new_game():
     global player_name
     print("^" * 40)
     print("\nWelcome to the Battleship Game!\n")
-    print(f"You have {number_ships} ships to find on the board.")
+    print(f"You have {number_ships} ship(s) to find on the board.")
     print(f"Boardsize: {size}x{size}.")
     print(f"Available options are row: 0-{size - 1} & column: 0-{size - 1}.\n")
     print("^" * 40)
@@ -31,16 +31,7 @@ def build_board(size):
     return [["O" for count in range(size)] for count in range(size)]
 
 
-def print_player_board(board):
-    """
-    Prints out the player's name and board.
-    """
-    print(f"{player_name}'s board:")
-    for i in board:
-        print(*i)
-
-
-def print_computer_board(board):
+def print_board(board):
     """
     Prints out the computer's board.
     """
@@ -49,23 +40,11 @@ def print_computer_board(board):
         print(*i)
 
 
-def hidden_player_board(board):
-    """
-    Board that has the hidden ships.
-    """
-    for i in board:
-        return (*i)
-
-
-def hidden_computer_board(board):
-    """
-    Board that has the hidden ships.
-    """
-    for i in board:
-        return (*i)
-
-
 def player_guess():
+    """
+    Here the user will enter their values about row and column.
+    """
+    global guess
     while True:
         row = int(input("\nChoose a row: "))
         if validate_row(row, size):
@@ -83,21 +62,23 @@ def player_guess():
     return guess
 
 
-def random_values(size):
+def ship(size):
     """
-    Creates random guess from computer.
+    Creates a random value for the ship.
     """
-    random_list = []
-    c_row, c_column = randint(0, size - 1), randint(0, size - 1)
-    random_list.append(c_row)
-    random_list.append(c_column)
-    print(f"Computer guessed row: {c_row} column: {c_column}.")
-    print(random_list)
+    global random_value
+    global ship_row
+    global ship_column
+    ship_row, ship_column = randint(0, size - 1), randint(0, size - 1)
+    random_value = ship_row, ship_column
 
 
 def validate_row(row, size):
+    """
+    Validates the row value.
+    """
     try:
-        if row < 0 or row > 5:
+        if row < 0 or row > size - 1:
             raise ValueError(
                 f"Only 0-{size - 1} is accepted here. You entered {row}"
             )
@@ -110,8 +91,11 @@ def validate_row(row, size):
 
 
 def validate_column(column, size):
+    """
+    Validates the column value.
+    """
     try:
-        if column < 0 or column > 5:
+        if column < 0 or column > size - 1:
             raise ValueError(
                 f"Only 0-{size - 1} is accepted here. You entered {column}"
             )
@@ -122,26 +106,18 @@ def validate_column(column, size):
     return True
 
 
-def build_ships(size, ship, board, number_ships):
-    for ship in range(number_ships):
-        row_ship, col_ship = randint(0, size - 1), randint(0, size - 1)
-        while board[row_ship][col_ship] == "X":
-            row_ship, col_ship = player_guess()
-        board[row_ship][col_ship] = "X"
-
-
-def update_board(guess, board, ship, guesses):
-    if guess in guesses:
-        print("Sorry, you have already guessed that I'm afraid")
+def result(guess, board, random_value):
+    """
+    Gives the result of the guess.
+    """
+    if guess == random_value:
+        print("Well look at that! You sank the battleship!")
+        print(f"The ship was located on {random_value}.")
         return board
-    guesses.append(guess)
-    if guess in ship:
-        print("Oh no! You hit my battleship!")
-        board[guess[0]][guess[1]] = 'X'
-        ship.remove(guess)
-        return board
-    print("You missed!")
-    return board
+    else:
+        while guess != random_value:
+            print(f"You missed! {random_value} was correct.")
+            return board
 
 
 def main():
@@ -151,19 +127,11 @@ def main():
     """
     new_game()
     board = build_board(size)
-    ship = build_ships(size)
-    print_player_board(board)
-    print_computer_board(board)
-    guesses = []
-    p_guess = player_guess()
-    while len(ship) > 0:
-        board = update_board(p_guess, board, ship, guesses)
-        print_player_board(board)
-        print_computer_board(board)
-    # random_values(size)
-    print("You sank my ship!")
+    print_board(board)
+    guess = player_guess()
+    ship(size)
+    board = result(guess, board, random_value)
     return
 
 
 main()
-

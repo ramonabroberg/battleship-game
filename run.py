@@ -49,6 +49,22 @@ def print_computer_board(board):
         print(*i)
 
 
+def hidden_player_board(board):
+    """
+    Board that has the hidden ships.
+    """
+    for i in board:
+        return (*i)
+
+
+def hidden_computer_board(board):
+    """
+    Board that has the hidden ships.
+    """
+    for i in board:
+        return (*i)
+
+
 def player_guess():
     while True:
         row = int(input("\nChoose a row: "))
@@ -106,16 +122,26 @@ def validate_column(column, size):
     return True
 
 
-def build_ships(size):
-    r_ship = [random.randint(0, size - 1)]
-    col = random.randint(0, size - 1)
-    c_ship = list(range(col, col + 1))
-    coords = tuple(zip(r_ship, c_ship))
-    print(list(coords))
+def build_ships(size, ship, board, number_ships):
+    for ship in range(number_ships):
+        row_ship, col_ship = randint(0, size - 1), randint(0, size - 1)
+        while board[row_ship][col_ship] == "X":
+            row_ship, col_ship = player_guess()
+        board[row_ship][col_ship] = "X"
 
 
-def update_board():
-    pass
+def update_board(guess, board, ship, guesses):
+    if guess in guesses:
+        print("Sorry, you have already guessed that I'm afraid")
+        return board
+    guesses.append(guess)
+    if guess in ship:
+        print("Oh no! You hit my battleship!")
+        board[guess[0]][guess[1]] = 'X'
+        ship.remove(guess)
+        return board
+    print("You missed!")
+    return board
 
 
 def main():
@@ -125,11 +151,18 @@ def main():
     """
     new_game()
     board = build_board(size)
+    ship = build_ships(size)
     print_player_board(board)
     print_computer_board(board)
-    build_ships(size)
-    player_guess()
-    random_values(size)
+    guesses = []
+    p_guess = player_guess()
+    while len(ship) > 0:
+        board = update_board(p_guess, board, ship, guesses)
+        print_player_board(board)
+        print_computer_board(board)
+    # random_values(size)
+    print("You sank my ship!")
+    return
 
 
 main()

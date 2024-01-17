@@ -15,6 +15,7 @@ The goals are as follows:
 - The players want to be able to understand the purpose of the game from the start.
 - The players want the game to be easy to understand and follow.
 - The players want the game to be a challenge that's not too easy to win.
+- The players want to know whether they won or not.
 - The players want to know where the hidden ship was located to see if they were close.
 
 ## Flow chart
@@ -23,7 +24,13 @@ The goals are as follows:
 
 ## Game overview
 
+### Loss:
+
 ![Game overview](https://res.cloudinary.com/dpk2gl3yf/image/upload/v1705521740/game-view_wcx7at.png)
+
+### Win:
+
+![Game win](https://res.cloudinary.com/dpk2gl3yf/image/upload/v1705528466/winner_c2xalg.png)
 
 ### If the player enters invalid values:
 
@@ -50,7 +57,11 @@ The goals are as follows:
 - Value under 0: Invalid, error message "Invalid data: Only 0-3 is accepted here. You entered [number]. Please try again."
 - Value over 3: Invalid, error message "Invalid data: Only 0-3 is accepted here. You entered [number]. Please try again."
 
-When entering invalid values the player gets the error messages above as planned and then gets to enter a new value which is correct.
+- When entering invalid values the player gets the error messages above as planned and then gets to enter a new value which is correct.
+- The player's guess is displayed as expected.
+- If the player miss the ship it says so.
+- If the player hit the ship and win it says so.
+- The row and column values of the hidden ship shows in the end as it should.
 
 # Deployment
 
